@@ -1,2 +1,4 @@
 # Mir-Python
-Mir's Python Repository
+This repository is created for educational purposes and experimenting with Python programming language.
+
+
