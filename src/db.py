@@ -15,7 +15,7 @@ import pymysql
 def connect_MySQL(host, user, passw, db_name):
     
     """
-    Conntects to MySQL database and returns a DB instance for further opeartions
+    Connects to MySQL database and returns a DB instance for further operations
     like running SQL commands
     """
     
