@@ -11,6 +11,7 @@ This module is created for benchmarking the performance of NumPy package install
 on system.
 """
 
+from datetime import datetime
 import numpy as np
 import platform
 import psutil
@@ -23,8 +24,7 @@ __version__ = '0.1'
 DASHED_LINES = 35 * "-"
 rep_bench = 3 # number of times that a test will be performed
 
-program_header = """
-Python's NumPy benchmark v. %s
+program_header = """Python's NumPy benchmark v. %s
 Developer: Mir, A.
 %s
 """ % (__version__, DASHED_LINES)
@@ -89,7 +89,12 @@ def start_bench():
     
     mat_sizes = (512, 1024, 2048, 4096, 8192)
     
-    test_str = "Test %d: Matrix of size %d x %d - Time: %.3f Seconds"
+    # Appeding benchmark result to a string
+    result_bench_str = 'Operation: Dense Matrix Multiplication\n'
+    
+    test_str = "Test %d: Matrix of size %d x %d - Time: %.3f Seconds\n"
+    
+    print(result_bench_str, end='')
     
     for t, size in enumerate(mat_sizes):
         
@@ -100,14 +105,35 @@ def start_bench():
         bench_time = round(timeit.Timer(functools.partial(np.dot, mat_A, \
                            mat_B)).timeit(rep_bench) / rep_bench, 3)
         
-        print(test_str % (t + 1, mat_A.shape[0], mat_B.shape[0], bench_time))
-
- 
-    
+        test_result = test_str % (t + 1, mat_A.shape[0], mat_B.shape[0], bench_time)
         
-    
-    
+        print(test_result, end='')
+        
+        result_bench_str += test_result
 
+    print(DASHED_LINES)
+    
+    result_bench_str += DASHED_LINES + '\n'
+    
+    return result_bench_str
+    
+    
+def save_result_file(bench_result):
+    
+    """
+    It saves benchmark result in a file
+    """
+    
+    file_name = "NumPy benchmark result - %s " % datetime.now().strftime('%Y-%m-%d %H-%M')
+ 
+    result_file = open(file_name, 'w')
+    
+    for section in bench_result:
+        
+        result_file.write(section)
+    
+    result_file.close()
+    
 ########################
 
 
@@ -115,8 +141,17 @@ if __name__ == '__main__':
     
     print(program_header)
     
-    print(sys_info())
+    system_spec = sys_info()
+    
+    print(system_spec)
     
     input("Press Enter to start the benchmark... \n")
     
-    start_bench()
+    result = start_bench()
+    
+    finished_date = "Benchmark compeleted " + datetime.now().strftime("on %b %m, %Y at %H:%M %p")
+    
+    # Time and date of benchmark completion
+    print(finished_date)
+    
+    save_result_file([program_header, system_spec, result, finished_date])
