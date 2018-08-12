@@ -1,0 +1,5 @@
+Here is a list of features which will be implemented in future builds:
+- Hash user's password (MD5). MD5 is NOT secure but for this educational 
+project is fine!!
+- Login section
+- Check if the user is already exist in a database.

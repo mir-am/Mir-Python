@@ -16,7 +16,7 @@ def main():
     hostname = 'localhost'
     username = 'MySQL_User'
     password = '123456789'
-    database_name = 'acme'
+    database_name = 'users'
     
     mysql_db = connect_MySQL(hostname, username, password, database_name)
 
